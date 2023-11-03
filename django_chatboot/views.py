@@ -7,6 +7,7 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from .models import Chatboot
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 
 load_dotenv()
@@ -27,8 +28,11 @@ def ask_openai(question):
     answer = response.choices[0].text.lstrip()
     return answer
 
-
+# @login_required
 def chatboot(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    
     chats = Chatboot.objects.filter(user=request.user)
     if request.method == 'POST':
         message = request.POST.get('message') 
