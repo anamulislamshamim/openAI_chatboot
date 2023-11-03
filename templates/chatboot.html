@@ -68,6 +68,14 @@
   <div class="chat-container">
     <div class="card flex-grow-1">
       <div class="card-header bg-primary text-white">Shamim's AI Chatboot</div>
+      {% if user.is_authenticated %}
+      <div class="card-header bg-primary text-white">Welcome {{ user.username }} <a style="color: orange; font-weight: 500; margin-left: 50px;" href="logout">Logout</a></div>
+      {% else %}
+      <div class="card-header bg-primary text-white">
+        <a style="color: yellow;" href="login">Login</a>
+        <a style="color: yellow; margin-left: 20px;" href="logout">Register</a>
+      </div>
+      {% endif %}
       <div class="card-body messages-box">
         <ul class="list-unstyled messages-list">
           <li class="message received">
@@ -75,7 +83,7 @@
               <div class="message-sender">
                 <b>Shamim's AI Chatboot</b>
               </div>
-              <div class="message-content">Hi, I am your AI Chatbot, you can ask me anything.</div>
+              <div class="message-content">Hi {{ user.username }}, I am your AI Chatbot, you can ask me anything.</div>
             </div>
           </li>
         </ul>
@@ -113,7 +121,7 @@
       messageItem.innerHTML = `
           <div class="message-text">
               <div class="message-sender">
-                <b>Your</b>
+                <b>{{ user.username }}</b>
               </div>
               <div class="message-content">
                 ${message}
