@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import openai
 import os
+from dotenv import load_dotenv
 
 
-open_api_key = os.environ.get('OPENAI_key')
+load_dotenv()
+open_api_key = os.environ.get('OPENAI_KEY')
 openai.api_key = open_api_key
 
 
