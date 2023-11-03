@@ -78,14 +78,36 @@
       {% endif %}
       <div class="card-body messages-box">
         <ul class="list-unstyled messages-list">
-          <li class="message received">
+          <li style="background-color: black; color: white; font-weight: bold; margin-bottom: 50px; border-radius: 5px;">
             <div class="message-text">
               <div class="message-sender">
                 <b>Shamim's AI Chatboot</b>
               </div>
-              <div class="message-content">Hi {{ user.username }}, I am your AI Chatbot, you can ask me anything.</div>
+              <div class="message-content">Hi {{ user.username }}, I am your AI Chatbot, you can ask me anything!</div>
             </div>
           </li>
+          {% for chat in chats %}
+          <li class="message sent">
+            <div class="message-text">
+              <div class="message-sender">
+                <b>{{ chat.user }}</b>
+              </div>
+              <div class="message-content">
+                {{chat.message}}
+              </div>
+            </div>
+          </li>
+          <li class="message received">
+            <div class="message-text">
+              <div class="message-receiver">
+                <b>Shamim's AI Chatboot</b>
+              </div>
+              <div class="message-content">
+                {{chat.response}}
+              </div>
+            </div>
+          </li>
+          {% endfor %}
         </ul>
       </div>
       <br /><br />
@@ -146,7 +168,7 @@
           messageItem.classList.add('message', 'received');
           messageItem.innerHTML = `
           <div class="message-text">
-            <div class="message-sender">
+            <div class="message-receiver">
               <b>AI Chatboot</b>
             </div>
             <div class="message-content">

@@ -5,6 +5,8 @@ import os
 from dotenv import load_dotenv
 from django.contrib import auth 
 from django.contrib.auth.models import User
+from .models import Chatboot
+from django.utils import timezone
 
 
 load_dotenv()
@@ -27,11 +29,14 @@ def ask_openai(question):
 
 
 def chatboot(request):
+    chats = Chatboot.objects.filter(user=request.user)
     if request.method == 'POST':
         message = request.POST.get('message') 
         response = ask_openai(message)
+        chat = Chatboot(user=request.user, message=message, response=response, created_at=timezone.now())
+        chat.save()
         return JsonResponse({'message': message, 'response': response})
-    return render(request, 'chatboot.html')
+    return render(request, 'chatboot.html', {'chats': chats})
 
 
 def login(request):
